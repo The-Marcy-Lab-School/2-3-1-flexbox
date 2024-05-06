@@ -1,4 +1,4 @@
-Flexbox
+# Flexbox
 
 **Resources**:
 * [A guide to flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
@@ -6,6 +6,7 @@ Flexbox
 * [A great video to learn flexbox](https://www.youtube.com/watch?v=u044iM9xsWU&ab_channel=KevinPowell)
 
 **Table of Contents**:
+- [Terms](#terms)
 - [Part 0 - Explore Flexbox on Youtube](#part-0---explore-flexbox-on-youtube)
 - [Part 1 - Flex Containers and Flex Items](#part-1---flex-containers-and-flex-items)
 - [Part 2 - Demo Styling a Navbar using Flexbox Container Properties](#part-2---demo-styling-a-navbar-using-flexbox-container-properties)
@@ -19,44 +20,92 @@ Flexbox
   - [Equal Columns](#equal-columns)
 - [Part 5 - Examples!](#part-5---examples)
 
+## Terms
+
+* **Flexbox** - a `display` type that arranges flexible elements in rows (or columns)
+* **Flex Container** - the element with `display:flex`. Its children are "flex items"
+* **Flex Item** - an element inside of a flex container. It's size can flex based on the CSS settings of the flex container.
+* **Main Axis** — the direction that flex items flow in
+* **Cross Axis** — the direction perpendicular to the main axis
+* The essential **flex container properties** are:
+  * `justify-content` — defines alignment along the **main axis**
+  * `align-items` — defines alignment along the **cross axis**
+  * `gap` — controls spacing _between_ flex items (not on outer edges)
+  * `flex-direction` - defaults to `row` but can be set to `column` to arrange flex items vertically.
+* The essential **flex item properties** are:
+  * `flex-grow` - defines the amount a flex item will grow relative to its siblings
+  * `flex-shrink` - defines the amount a flex item will shrink relative to its siblings
+  * `flex-basis` - defines the starting size of a flex item
+  * `flex` - used as shorthand for the above 3 properties
+
 ## Part 0 - Explore Flexbox on Youtube
 
-> **Pacing:** 5 minutes (5 minutes total)
-> **Learning Objectives:** See flexbox in the real world
-> * Open https://www.youtube.com/ and see how elements shift in size as you resize the window. Point out the the videos that are aligned next to each other are NOT inline, they are flex items.
+Open https://www.youtube.com/ and see how elements shift in size as you resize the window. 
 
-Flex does two things: 
-1. puts things in a row (or column if you need to)
-2. makes things stretchy
-3. control the relative size of elements in a row
+![Three youtube videos in a row](./lecture/images/youtube.png)
 
-![](./lecture/images/flex-grow.gif)
+**Q: Look at a row of video "cards". Are they `display:inline`, `display:block` or something else? Guess, then inspect the page!**
 
 ## Part 1 - Flex Containers and Flex Items
 
-> **Pacing**: 5 minutes (10 minutes total)
-> **Learning Objective:** identify flex containers / flex items
-> * Briefly define what flexbox is and make sure they can identify the terms "flex container" and "flex items"
-
-* Flexbox is used for **organizing elements in a single direction**
-* `display: flex` defines a **flex container**. 
-* The children of the flex container are **flex items**
-* By default, flex items are placed in a row
+* Flexbox is used for **organizing children elements inside of a parent element**.
+  * The parent element gets the `display: flex` propert, making it a **flex container**. 
+  * The children of the flex container automatically become **flex items**
 
 ![Flex containers and flex items](./lecture/images/flex-container-items.png)
 
+Flexbox does two things to a parent element: 
+1. puts its children horizontally in a row (or vertically in a column)
+2. makes those elements stretchy (we can control how much they stretch though!)
+
+![](./lecture/images/flex-grow.gif)
+
+See how this is implemented in [`0-flexbox-demo/`](./lecture/0-flexbox-demo/)!
+
+```css
+/* Flex makes it easy to put things in a row with beautiful spacing */
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+}
+
+.flex-item {
+  flex-grow: 1;
+}
+
+.flex-item:hover {
+  flex-grow: 3;
+}
+```
+
 ## Part 2 - Demo Styling a Navbar using Flexbox Container Properties
 
-> **Pacing:** 15 minutes (25 minutes total)
-> **Learning Objective:** see what flexbox can do
-> * Have fellows follow along with you. This is just to show them what flexbox can do. After, we'll see what makes flexbox work. Open up the `1-navbar/` directory and the `index.html` and `index.css` files. 
-> * Serve using live preview. Start by uncommenting the styles of the `ul` to show how `display: flex` styles the the block elements to be aligned horizontally. Then insert a gap. Then do the same for the `header`, discussing briefly `justify-content` and `align-items`
+One of the most common uses of flexbox is to style a navigation bar. Open up [`1-navbar`](./lecture/1-navbar/) and look at the `<header>` element:
 
-* Ordinarily, elements are `display: block` elements are stacked on top of each other.
-* `display: flex` arranges flex items horizontal
-* Making a navigation bar is one of the common applications of flexbox since **we typically want to align navigation elements horizontally**.
+```html
+<!-- Often, the header contains a logo and a nav component -->
+<header>
+  <p id="header-logo">Ben's Blog</p>
+  <nav>
+    <!-- It is common to put a ul inside with links as list items -->
+    <ul id="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+Below, you can see what the header currently looks like (left) and what we want it to look like (right). What is different?
 
 ![Without flexbox, items are aligned vertically. With flex box, we can align items horizontally with nice spacing](lecture/images/flexbox-comparison.png)
+
+**Q: How do we fix this?**
+
+* Most elements are `display: block` which means they are stacked on top of each other.
+* We can apply `display: flex` to a parent element to put its children in a row horizontally
 
 ```css
 header {
@@ -79,10 +128,6 @@ ul {
 
 
 ## Part 3 - Flexbox Main and Cross Axes
-
-> **Pacing:** 10 minutes (35 minutes total)
-> **Learning Objective:** Understand that flexbox containers have two axes: main and cross
-> * Now that we've seen what flexbox can do, we can dive deeper into how flexbox works. Explore how direction changes the axes and how justify-content and align-items work.
 
 * Flexbox has two axes, the **main axis** and the **cross axis**
 
@@ -109,11 +154,7 @@ ul {
 
 ## Part 4 - Growing and Shrinking
 
-> **Pacing:** 15 minutes (50 minutes total)
-> **Learning Objective:** See how flex items behave when space is limited.
-> * Now open the `2-flexing/` directory and serve the `index.html` page.
-> * Here we want to demonstrate how the `flex-wrap`, `flex-basis` and `flex-grow` properties all control how flex items behave when space is limited. Show first what the default behavior of flex items is without any of these values set. Then add/remove them to show the difference. 
-> `flex-basis` often causes confusion since it is similar (but different) from setting the `width` of each flex item.
+The `flex-wrap`, `flex-basis` and `flex-grow` properties all control how flex items behave when space is limited.
 
 ### Flex Wrap
 
@@ -162,6 +203,8 @@ ul {
 
 * The `flex` property can serve as a short-hand for all three: `flex: 1 1 0%`
 * The default is `0 1 auto`, but if you set it with a single number value, like `flex: 5;`, that changes the `flex-basis` to `0%`, so it’s like setting `flex-grow: 5; flex-shrink: 1; flex-basis: 0%;`.
+
+> `flex-basis` often causes confusion since it is similar (but different) from setting the `width` of each flex item.
 
 ## Part 5 - Examples!
 
