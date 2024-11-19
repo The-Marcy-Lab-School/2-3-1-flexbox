@@ -37,11 +37,6 @@ p {
   padding: 0;
 }
 
-#nav-links {
-  /* display: flex; */
-  /* gap: 1rem; */
-}
-
 header {
   padding: 0.5rem;
   background-color: rgb(236, 236, 236);
@@ -57,7 +52,9 @@ header {
   /* flex-direction lets you choose row or column */
 }
 
-
+#nav-links {
+  /* We just want the nav links to be horizontal with some gap */
+}
 
 main {
   margin: 2rem 10%;
